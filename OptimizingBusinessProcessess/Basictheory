@@ -1,0 +1,62 @@
+In this step, we will be optimizing business processes.
+
+Basics elements of AI:
+
+1. Agent: An agent is an actor in an environment which can perform a certain set of actions and move to different set of states.
+For example: In PACMAN, an ant eater is an agent which moves around in its environment and takes actions like [left, right, up, down].
+
+2. State: States are different locations in the environment where the agent can traverse. The states are coded and an agent can move into and out
+of a state by performing actions. For example, in a grid/maze A,B,C,D can be different states within the environment. 
+
+3. Actions: Actions are the movements which can be made by an agent to transition from one state in an environment to another state in an environment.
+
+4. Rewards/Penalties: Rewards are usually positive points associated with a state. A reward is given to an agent when the agent transitions from any 
+other state to a state associated with a reward. 
+Penalties are usually negative points associated with a state. A penalty is given to an agent when the agent transitions from any 
+other state to a state associated with a penalty.
+
+5. Bellman's equation for a deterministic state: 
+A deterministic state is one in which there is no probability or chance associated with an agent to perform more than one action. Here we backtrack from the final state,
+and calculate the value associated with each state backwards to the point of origin. This value is created by using Bellman's equation to calculate
+the value of each state tracking backwards from the last state. This creates a plan for the agent to move around in the environment.
+Thus, when an agent is placed at any starting point, it can follow the route and transition into states leading to higher value and hence
+towards the goal/target/final state. In this deterministic model, we can see that the value of each state reduces as we move away from the final state.
+
+Bellman Equation:
+
+V(s,a) = R(s,a) + γV(s`, a`) , where
+
+V(s,a) = Value of the current state where the agent is
+R(s,a) = Reward associated with the state where the agent plans to transition
+γ = discount factor 
+V(s`, a`) = Value of the next state where the agent plans to transition
+
+6. Bellman's equation for a non-deterministic state: in a non-deterministic state, we have to take into account the probability of the agent
+moving to different neighbouring states when on its course to the final state. There is no defined plan now and the agent when placed in
+the starting state has chances of moving to different states. This is achieved by making use of Q-Learning and we call it a policy instead of a plan. This
+is called policy vs plan initiative. 
+
+V(s,a) = R(s,a) + γmax(a)(P(s,a,s`)V(s`, a`)) , where
+
+V(s,a) = Value of the current state where the agent is
+R(s,a) = Reward associated with the state where the agent plans to transition
+γ = discount factor 
+V(s`, a`) = Value of the next state where the agent plans to transition
+P(s,a,s`) = probability of moving to any state s` from state s by performing an action a. 
+max(a) means we would take the max value of (P(s,a,s`)V(s`, a`)) for any action performed by agent to go from s to s`.
+
+7. Q-Learning Bellman formula:
+In Q-Learning, we do not use the term value or V(s,a) but instead use Q(s,a). In Q-Learning, we keep track of the value of 
+the state at different times t-1, t, t+1, etc. 
+
+Q-Learning formula:
+Q(s,a) = R(s,a) + γmax(a)(Q(s`, a`))
+
+8. Temporal Difference : Temporal difference is the Q-Learning value difference between the Q values at different time intervals. It is 
+calculated at different time t for each state in the environment. It is denoted by TD(a,s).
+
+We have Q(s,a) = R(s,a) + γmax(a)(Q(s`, a`)), 
+TD(a,s) = R(s,a) + γmax(a)(Q(s`, a`)) - Q(t-1)(s,a)
+
+Q(t)(s,a) = Q(t-1)(s,a) + αTD(t)(a,s)
+where α = learning rate 
