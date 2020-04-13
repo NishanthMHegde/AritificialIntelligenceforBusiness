@@ -1,0 +1,38 @@
+Deep Q Learning : The use of Artificial Neural Networks or any Deep Learing model in conjunction with the basic Q-Learning
+principles is called Deep Q-Learning. In these cases, the agent does not have the simple task of moving around in an environment
+but also has the task of selecting the appropriate actions to take based on a lot of historical factors. For this purpose,
+ we use a Deep Learning model to train our agent using historical records about our environment, the actions which were taken,
+ the rewards/penalties that were obtained and the actions taken to transition to different states so as to make our agent familiar with the steps to be taken in the future in a new environment or future environment. 
+
+ Process of Deep Q-Learning:
+
+ 1. Input: We identifiy the important variables which will be used in the neural network which decide the actions and state transitions for our agent. In our example, we have the input variables as num of users of the datacenter, rate of change of number of users, number of active servers, number of users leaving, etc. These inputs are provided in the input node. 
+
+ 2. Hidden Layer: In this layer, the weights and inout variables are used and hidden neurons are activated to find out the Q-values for each input node. This is the place where all the processing takes place.
+
+ 3. Output Layer: In this layer, the resultant Q values are obtained. Once these resultant Q-values are obtained, the loss function is calculated from each of the Q-values obtained from the output node using the formula:
+ Loss = sum(Q-target - Qi), where i is the index of the output node. 
+
+ This loss is then backpropogated to the network to adjust the weights and biases. 
+
+ Experience Replay: Our Agent can seldom(rarely) encounter precarious situations where it needs to act in a manner different from what it was used to doing up until that point of time. In order to better equip the Agent to handle such scenarios, we would have to periodically train the Agent on such rare experiences. We can do so by creating a small batch of observations and periodically "Replaying" them so that our Agent has a grip and recent learning of the precarious experiences. 
+
+ Action Selection Policies: Once we get the final set of resultant Q-values from our Output nodes, we need to decide which Q-value to choose which will decide the action our Agent is going to take. 
+
+ The different Action Selection policies are:
+
+NOTE: Here E means Epsilon
+ASSUMPTION: Let us assume Q1, Q2, Q3 and Q4 are the 4 resultant Q-values obtained from our Output nodes.
+ 1. Greedy E: In this action selection policy, we select the output node with highest Q-value E percentage of the times (beeing greedy) and choose the rest of the Q-values (1-E) percentage of the times.
+ 2. Soft 1-E: In this action selection policy, we select the output node with highest Q-value 1-E percentage of the times (beeing soft) and choose the rest of the Q-values (E) percentage of the times.
+3. Softmax: In this action selection policy, we apply Softmax function on the output of the Output node and then obtain the resultant Q-values Q1, Q2, Q3 and Q4 which represent the probability of actions occurring for each of the Q-values. The sum of the probabilities adds up to one. Assume:
+Q1 =0.5,
+Q2 = 90,
+Q3 = 4.5
+Q4 = 5
+
+In the above case we would choose Q2 90% of the times, Q1 0.5% of the times, Q3 4.5% of the times and Q4 5% of the times.
+
+WHy do we do this? It is because of :
+
+Exploration vs Exploitation: We ccould have easily used and expolited the output node with highest Q-value. But this would not allow us to explore the remaining actions belonging to other Q-values and hence prevent the Agent from being abreast with the rare experiences which could prove to be useful in critical situations. This also highlights the importance of "Experience Replay".
