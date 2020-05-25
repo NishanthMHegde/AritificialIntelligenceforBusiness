@@ -4,7 +4,7 @@ import numpy as np
 
 class DQN(object):
 	#initialize the max memory and discount factor
-	def __init__(self, max_memory==100, discount=0.9):
+	def __init__(self, max_memory=100, discount=0.9):
 		self.max_memory = max_memory
 		self.discount = discount
 		self.memory = list()
@@ -18,11 +18,11 @@ class DQN(object):
 	#method that builds a batch of 10 inputs and 10 targets by extracting 10 transitions from memory
 	def get_batch(self,model,batch_size=10):
 		len_memory = len(self.memory)
-		num_inputs = self.memory[0][0][0] #first state in the numpy matrix returned from envirpnment module
+		num_inputs = self.memory[0][0][0].shape[1] #first state in the numpy matrix returned from envirpnment module
 		num_outputs = model.output_shape[-1]
 		#create empty input and targets
-		inputs = np.zeros((min(len_memory), batch_size), num_inputs)
-		targets = np.zeros((min(len_memory), batch_size), num_outputs)
+		inputs = np.zeros((min(len_memory, batch_size), num_inputs))
+		targets = np.zeros((min(len_memory, batch_size), num_outputs))
 		#populate the inputs and targets by looping in batches
 		for i, idx in enumerate(np.random.randint(0, len_memory, size=min(len_memory, batch_size))):
 			#get the idx-th transition from memory
@@ -38,3 +38,4 @@ class DQN(object):
 				targets[i, action] = reward #if game was over, then the cell in the ith row and the column corresponding to the action taken at the previous state will only have reward added
 			else:
 				targets[i, action] = reward + self.discount * Q_sa
+		return inputs, targets

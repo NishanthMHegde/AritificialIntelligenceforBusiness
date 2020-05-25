@@ -12,7 +12,7 @@ where each node corresponds to one of the below actions:
 
 import keras
 from keras.layers import Input,Dense
-from keras.model import Model 
+from keras.models import Model 
 from keras.optimizers import Adam
 
 class Brain(object):
@@ -28,4 +28,4 @@ class Brain(object):
 		#create the model
 		self.model = Model(inputs=states, outputs=q_values)
 		#compile the model using Adam optimizer and mean square error loss function
-		self.model.compile(loss="mse", optimizer=Adam(lr=learning_rate))
+		self.model.compile(loss="mse", optimizer=Adam(lr=self.learning_rate))
